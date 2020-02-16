@@ -1,0 +1,11 @@
+{
+  "name": "ReactTutorial",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:myahal/ReactTutorial.git",
+  "author": "Chiharu Miya <miya.chiharu@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "create-react-app": "^3.4.0"
+  }
+}
