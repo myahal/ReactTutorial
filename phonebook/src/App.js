@@ -8,9 +8,13 @@ const App = () => {
 
   const onClickAdd = (event) => {
     event.preventDefault()
-    const newPerson = { name: newName }
-    setPersons([...persons, newPerson])
-    setNewName('')
+    if (persons.find((p) => p.name === newName)) {
+      alert(`${newName} is already added to phonebook`)
+    } else {
+      const newPerson = { name: newName }
+      setPersons([...persons, newPerson])
+      setNewName('')
+    }
   }
 
   const onChangeName = (event) => {
