@@ -1,39 +1,43 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const Title = ({text}) => {
-    return(
+const Title = ({ text }) => {
+    return (
         <h1>{text}</h1>
     )
 }
 
-const Button = ({onClick, text}) => {
-    return(
+const Button = ({ onClick, text }) => {
+    return (
         <button onClick={onClick}>{text}</button>
     )
 }
 
-const Statistic = ({text, value}) => {
-    return(
-        <div>{text} {value}</div>
+const Statistic = ({ text, value }) => {
+    return (
+        <tr>
+            <td>{text}</td>
+            <td>{value}</td>
+        </tr>
 
     )
 }
 
-const Statistics = ({good, neutral, bad}) => {
+const Statistics = ({ good, neutral, bad }) => {
     const all = good + neutral + bad
-    const average = (good + bad * -1)/all
-    const positive = good/all * 100 + '%'
-    return(
-        <>
-        <Statistic text='good'  value={good} />
-        <Statistic text='neutral'  value={neutral} />
-        <Statistic text='bad'  value={bad} />
-        <Statistic text='all'  value={all} />
-        <Statistic text='average'  value={average} />
-        <Statistic text='positive'  value={positive} />
-
-        </>
+    const average = (good + bad * -1) / all || 0
+    const positive = good / all * 100 || 0 + '%'
+    return (
+        <table>
+            <tbody>
+                <Statistic text='good' value={good} />
+                <Statistic text='neutral' value={neutral} />
+                <Statistic text='bad' value={bad} />
+                <Statistic text='all' value={all} />
+                <Statistic text='average' value={average} />
+                <Statistic text='positive' value={positive} />
+            </tbody>
+        </table>
     )
 }
 
@@ -45,7 +49,7 @@ const App = () => {
 
     const clickGood = () => {
         setGood(good + 1)
-    }  
+    }
     const clickNeutral = () => {
         setNeutral(neutral + 1)
     }
@@ -53,17 +57,17 @@ const App = () => {
         setBad(bad + 1)
     }
     return (
-      <div>
-          <Title text="give feedback" />
+        <div>
+            <Title text="give feedback" />
             <Button onClick={() => clickGood()} text='good' />
             <Button onClick={() => clickNeutral()} text='neutral' />
             <Button onClick={() => clickBad()} text='bad' />
 
-          <Title text="statistics" />
+            <Title text="statistics" />
             <Statistics good={good} neutral={neutral} bad={bad} />
-      </div>
+        </div>
     )
-  }
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
