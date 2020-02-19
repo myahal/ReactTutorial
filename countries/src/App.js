@@ -5,7 +5,17 @@ import Country from './components/Country'
 function App() {
   const [countries, setCountries] = useState([])
   const [filter, setFilter] = useState('')
-  const [showCountries, setShowCountries] = useState([])
+
+  const filterCountries = () => {
+    const reg = RegExp(filter, 'i')
+    return countries.filter((country) => {
+      return country.name.match(reg)
+    })
+  }
+
+  const countriesToShow = filter
+    ? filterCountries()
+    : countries
 
   useEffect(() => {
     axios.get('https://restcountries.eu/rest/v2/all')
@@ -17,22 +27,16 @@ function App() {
 
   const onChangeFilter = (event) => {
     setFilter(event.target.value)
-    const reg = RegExp(event.target.value, 'i')
-    const filtered = countries.filter((country) => {
-      return country.name.match(reg)
-    })
-    setShowCountries(filtered)
-
   }
 
   const disp = () => {
-    if (showCountries.length > 10) {
+    if (countriesToShow.length > 10) {
       return <div>Too many matches, specify another filter</div>
-    } else if (showCountries.length === 1) {
-      return showCountry(showCountries[0])
+    } else if (countriesToShow.length === 1) {
+      return showCountry(countriesToShow[0])
     } else {
-      return showCountries
-        .map((c) => <Country country={c} setShowCountries={setShowCountries} key={c.topLevelDomain} />)
+      return countriesToShow
+        .map((c) => <Country country={c} setFilter={setFilter} key={c.topLevelDomain} />)
     }
   }
 

@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Country = ({ country, setShowCountries }) => {
+const Country = ({ country, setFilter }) => {
     const onClick = () => {
-        setShowCountries([country])
+        setFilter(country.name)
     }
     return (
         <div >
