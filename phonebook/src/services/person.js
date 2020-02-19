@@ -7,8 +7,9 @@ const create = person => {
 }
 
 const getAll = () => {
+    const p = { name: 'not server', number: '2222', id: 100 }
     return axios.get(baseUrl)
-        .then(response => response.data)
+        .then(response => response.data.concat(p))
 }
 
 const deletePerson = (id) => {
