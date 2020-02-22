@@ -1,6 +1,5 @@
 const notesRouter = require('express').Router()
 
-
 let notes = [
     {
         id: 1,
@@ -30,19 +29,20 @@ notesRouter.get('/', (req, res) => {
 notesRouter.get('/:id', (request, response) => {
     const id = Number(request.params.id)
     const note = notes.find(note => note.id === id)
-
-    if (note) {
+        // 該当するノートがなければundefined
+    if (note) { 
         response.json(note)
     } else {
-        response.status(404).end()
+        response.status(404).end()  // not found(404) + end()でデータを返さずに返信する　
     }
 })
 
+// 該当するレコードがない場合は204か404を返す。今回は204
 notesRouter.delete('/:id', (request, response) => {
     const id = Number(request.params.id)
     notes = notes.filter(note => note.id !== id)
 
-    response.status(204).end()
+    response.status(204).end()  // 204 no content
 })
 
 const generateId = () => {
@@ -52,10 +52,12 @@ const generateId = () => {
     return maxId + 1
 }
 
+// request bodyにJSONで情報を送る -> データにアクセスするためにbody-parserを使う
 notesRouter.post('/', (request, response) => {
-    const body = request.body
+    const body = request.body   // body parserを使うとbodyプロパティに値が入る（使わない場合はundefined)
 
     if (!body.content) {
+        // ここでreturnしないと、不正なデータが保存されてしまう
         return response.status(400).json({
             error: 'content missing'
         })
@@ -64,7 +66,7 @@ notesRouter.post('/', (request, response) => {
     const note = {
         content: body.content,
         important: body.important || false,
-        date: new Date(),
+        date: new Date(),   // 日時情報はサーバ側で作った方がいい
         id: generateId(),
     }
 
