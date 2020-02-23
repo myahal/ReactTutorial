@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'https://murmuring-waters-55174.herokuapp.com/api/persons'
+const baseUrl = '/api/persons'
 
 const create = person => {
     return axios.post(baseUrl, person)
