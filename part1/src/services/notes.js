@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/notes'
+const baseUrl = '/api/notes'
 
 const getAll = () => {
     const nonExisting = {
@@ -10,7 +10,7 @@ const getAll = () => {
         important: true,
     }
     return axios
-        .get('http://localhost:3001/notes')
+        .get(baseUrl)
         .then(response => response.data.concat(nonExisting))
 }
 
